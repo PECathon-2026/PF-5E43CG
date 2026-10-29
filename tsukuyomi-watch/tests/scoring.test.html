@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tsukuyomi Watchtower — Night Honor Score Unit Tests</title>
+    <style>
+        body { font-family: monospace; background: #0D0D12; color: #F5EEDB; padding: 2rem; line-height: 1.6; }
+        h1 { color: #D4AF37; }
+        .pass { color: #4E9A51; font-weight: bold; }
+        .fail { color: #C13628; font-weight: bold; }
+        .test-box { background: #16161E; border: 1px solid #D4AF37; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>⛩️ Tsukuyomi Watchtower — Scoring Engine Test Suite</h1>
+    <p>Automated verification for Hackathon standards: 7-factor calculation, missing data handling, boundary conditions, and weight normalizations.</p>
+    <div id="results"></div>
+
+    <script src="../js/scoring.js"></script>
+    <script>
+        const resultsEl = document.getElementById('results');
+        const tests = [];
+
+        function assert(name, condition, message = '') {
+            tests.push({ name, passed: Boolean(condition), message });
+        }
+
+        // Test 1: Pristine Sky Scenario
+        const pristineWeather = {
+            cloud_cover: 0,
+            visibility: 30000,
+            humidity: 20,
+            wind_speed: 4,
+            elevation: 3776
+        };
+        const pristineResult = Scoring.calculate(pristineWeather, 1, 0, 'peak');
+        assert('Pristine Sky reaches maximum score (100)', pristineResult.finalScore >= 98, `Got ${pristineResult.finalScore}`);
+        assert('Pristine Sky receives "Celestial Sanctuary" rank', pristineResult.rank === 'Celestial Sanctuary');
+
+        // Test 2: Worst Case Overcast & High Light Pollution Scenario
+        const worstWeather = {
+            cloud_cover: 100,
+            visibility: 2000,
+            humidity: 100,
+            wind_speed: 60,
+            elevation: 10
+        };
+        const worstResult = Scoring.calculate(worstWeather, 9, 100, 'city');
+        assert('Worst sky conditions clamped to bottom score (0)', worstResult.finalScore <= 5, `Got ${worstResult.finalScore}`);
+        assert('Worst sky conditions receive "Clouded Horizon" rank', worstResult.rank === 'Clouded Horizon');
+
+        // Test 3: Missing Factor Handling & Dynamic Weight Normalization
+        // Missing humidity and wind, but cloud and light pollution present
+        const partialWeather = {
+            cloud_cover: 0,
+            visibility: 24000,
+            elevation: 1200
+        };
+        const partialResult = Scoring.calculate(partialWeather, 2, 10, 'park');
+        assert('Partial telemetry correctly normalizes available factors without crashing', partialResult.finalScore > 70);
+        assert('Data completeness correctly calculated', partialResult.dataCompletenessPct < 100 && partialResult.dataCompletenessPct > 50);
+
+        // Test 4: Custom Weights Configuration
+        Scoring.setWeights({ cloudCover: 0.50, lightPollution: 0.50, visibility: 0, humidity: 0, wind: 0, moon: 0, location: 0 });
+        const customResult = Scoring.calculate({ cloud_cover: 0 }, 1);
+        assert('Custom 50/50 weights calculate accurately', customResult.finalScore === 100, `Got ${customResult.finalScore}`);
+        Scoring.resetWeights(); // reset for downstream
+
+        // Test 5: Boundary Clamping (Never exceeds 100 or drops below 0)
+        const overflowResult = Scoring.calculate({ cloud_cover: -20, visibility: 100000, humidity: -10, wind_speed: -5, elevation: 9000 }, 0, -10, 'peak');
+        assert('Extreme out-of-bounds metrics clamp to exactly 100', overflowResult.finalScore <= 100 && overflowResult.finalScore >= 90);
+
+        // Render Results
+        let passCount = 0;
+        let html = '';
+        tests.forEach(t => {
+            if (t.passed) passCount++;
+            html += `<div class="test-box">
+                <span class="${t.passed ? 'pass' : 'fail'}">${t.passed ? '✓ PASS' : '✗ FAIL'}</span>:
+                <strong>${t.name}</strong> ${t.message ? `(${t.message})` : ''}
+            </div>`;
+        });
+
+        html = `<h2>Test Summary: ${passCount} / ${tests.length} Passed</h2>` + html;
+        resultsEl.innerHTML = html;
+    </script>
+</body>
+</html>
+

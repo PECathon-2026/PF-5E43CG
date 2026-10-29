@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsukuyomi Watchtower — Find Your Sanctuary Beneath the Stars</title>
+
+    <!-- Google Fonts: Japanese Edo & Modern Stargazing Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;500;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Custom Japanese Night Theme Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="samurai-theme">
+
+    <!-- Interactive Celestial Canvas (Twinkling Stars, Constellations, Shooting Stars) -->
+    <canvas id="celestialCanvas" aria-hidden="true"></canvas>
+
+    <!-- Falling Sakura Blossom Canvas / Layer -->
+    <div id="petals-container" aria-hidden="true"></div>
+
+    <!-- ===================================================
+         1. INTERACTIVE FRONT LANDING PAGE (CINEMATIC HERO)
+         =================================================== -->
+    <section id="landingPage" class="landing-page" aria-label="Welcome to Tsukuyomi Watchtower">
+        <div class="landing-mist-layer" aria-hidden="true"></div>
+
+        <!-- Mystic Moon Motif with Atmospheric Glow -->
+        <div class="landing-celestial-wrap" aria-hidden="true">
+            <div class="glowing-moon">
+                <div class="moon-crater c1"></div>
+                <div class="moon-crater c2"></div>
+                <div class="moon-crater c3"></div>
+                <div class="moon-haze"></div>
+            </div>
+        </div>
+
+        <!-- Layered Mountain & Torii / Katana Silhouettes -->
+        <div class="landing-silhouette-wrap" aria-hidden="true">
+            <svg class="landing-torii-svg" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMax meet">
+                <defs>
+                    <linearGradient id="mistGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#0B1021" stop-opacity="0"/>
+                        <stop offset="70%" stop-color="#0B1021" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#0B1021" stop-opacity="1"/>
+                    </linearGradient>
+                    <radialGradient id="toriiAura" cx="50%" cy="30%" r="50%">
+                        <stop offset="0%" stop-color="#d4af37" stop-opacity="0.25"/>
+                        <stop offset="50%" stop-color="#8b0000" stop-opacity="0.15"/>
+                        <stop offset="100%" stop-color="#0B1021" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="500" cy="220" r="260" fill="url(#toriiAura)"/>
+                <!-- Background Mountain Ridges -->
+                <path d="M 0 420 Q 200 310 400 370 T 780 330 Q 890 380 1000 420 L 1000 480 L 0 480 Z" fill="#080c18" opacity="0.9"/>
+                <path d="M 0 450 Q 260 380 500 410 T 1000 440 L 1000 480 L 0 480 Z" fill="#0e1424"/>
+
+                <!-- Torii Gate Silhouette -->
+                <g class="torii-silhouette" fill="#050811" stroke="#D4AF37" stroke-width="1.2">
+                    <path d="M 330 140 Q 500 115 670 140 L 680 156 Q 500 134 320 156 Z" fill="#8B0000"/>
+                    <path d="M 345 162 L 655 162 L 650 176 L 350 176 Z" fill="#070a14"/>
+                    <path d="M 360 216 L 640 216 L 640 228 L 360 228 Z" fill="#8B0000"/>
+                    <rect x="493" y="176" width="14" height="40" fill="#D4AF37"/>
+                    <polygon points="398,176 414,176 422,460 392,460" fill="#050811"/>
+                    <polygon points="586,176 602,176 608,460 578,460" fill="#050811"/>
+                    <rect x="386" y="452" width="42" height="14" rx="2" fill="#D4AF37"/>
+                    <rect x="572" y="452" width="42" height="14" rx="2" fill="#D4AF37"/>
+                </g>
+
+                <!-- Katana Silhouette -->
+                <g class="katana-silhouette" stroke="#D4AF37" stroke-width="1">
+                    <path d="M 280 430 Q 480 340 680 250" stroke="#f5eedb" stroke-width="3" fill="none" opacity="0.9"/>
+                    <circle cx="340" cy="402" r="9" fill="#8B0000" stroke="#D4AF37" stroke-width="2"/>
+                    <line x1="280" y1="430" x2="340" y2="402" stroke="#8B0000" stroke-width="6"/>
+
+                    <path d="M 720 430 Q 520 340 320 250" stroke="#f5eedb" stroke-width="3" fill="none" opacity="0.9"/>
+                    <circle cx="660" cy="402" r="9" fill="#8B0000" stroke="#D4AF37" stroke-width="2"/>
+                    <line x1="720" y1="430" x2="660" y2="402" stroke="#8B0000" stroke-width="6"/>
+                </g>
+                <rect x="0" y="380" width="1000" height="100" fill="url(#mistGrad)"/>
+            </svg>
+        </div>
+
+        <!-- Landing Hero Content -->
+        <div class="landing-scroll-container">
+            <div class="landing-content">
+                <div class="landing-crest">
+                    <span class="crest-kanji">月読</span>
+                </div>
+                <p class="landing-kicker">✦ PECATHON 2026 &bull; CELESTIAL DISCOVERY PLATFORM ✦</p>
+                <h1 class="landing-title">TSUKUYOMI WATCHTOWER</h1>
+                <p class="landing-tagline">“Find Your Sanctuary Beneath the Stars.”</p>
+                <p class="landing-subtitle">
+                    Discover optimal stargazing sanctuaries by harmonizing real-time atmospheric clarity,
+                    terrain elevation, and artificial light suppression. Guided by ancient celestial cartography.
+                </p>
+
+                <!-- Two Prominent Hero Actions -->
+                <div class="landing-hero-actions">
+                    <button id="heroExploreBtn" class="btn-ascend" type="button">
+                        <span class="btn-ascend-text">Explore the Night Sky</span>
+                        <span class="btn-ascend-kanji">登楼 ⛩</span>
+                        <span class="btn-blade-glint" aria-hidden="true"></span>
+                    </button>
+                    <button id="heroDiscoverBtn" class="btn-discover-nearby" type="button">
+                        <span>📍 Discover Nearby Sanctuaries</span>
+                    </button>
+                </div>
+
+                <!-- Live Atmospheric Conditions Preview -->
+                <div class="hero-live-preview">
+                    <div class="hlp-title">
+                        <span class="pulse-beacon"></span> Live Celestial Telemetry (Active Vantage)
+                    </div>
+                    <div class="hlp-grid">
+                        <div class="hlp-item">
+                            <span class="hlp-label">Cloud Cover</span>
+                            <span class="hlp-val" id="heroSkyCloud">0%</span>
+                        </div>
+                        <div class="hlp-item">
+                            <span class="hlp-label">Visibility</span>
+                            <span class="hlp-val" id="heroSkyVis">24 km</span>
+                        </div>
+                        <div class="hlp-item">
+                            <span class="hlp-label">Humidity</span>
+                            <span class="hlp-val" id="heroSkyHumid">45%</span>
+                        </div>
+                        <div class="hlp-item highlight">
+                            <span class="hlp-label">Night Honor Score</span>
+                            <span class="hlp-val gold" id="heroSkyScore">95/100 (Sanctuary)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page Section: The Art of Stargazing -->
+                <div class="landing-feature-section">
+                    <h2 class="sub-section-title">The Art of Stargazing</h2>
+                    <div class="art-grid">
+                        <div class="art-card">
+                            <div class="art-icon">🌫️</div>
+                            <h3>Atmospheric Purity</h3>
+                            <p>Real-time Open-Meteo telemetry measures aerosol scattering, humidity, and cloud boundaries to forecast viewing clarity.</p>
+                        </div>
+                        <div class="art-card">
+                            <div class="art-icon">🌌</div>
+                            <h3>Dark Sky Preservation</h3>
+                            <p>Estimates astronomical Bortle classes and correlates with NASA VIIRS satellite nighttime surface radiance.</p>
+                        </div>
+                        <div class="art-card">
+                            <div class="art-icon">🌒</div>
+                            <h3>Celestial Timing</h3>
+                            <p>Tracks astronomical lunar illumination, twilight windows, and nocturnal seeing conditions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page Section: Choose Your Sanctuary -->
+                <div class="landing-feature-section">
+                    <h2 class="sub-section-title">Choose Your Sanctuary</h2>
+                    <p class="section-desc">Click any sanctuary archetype to jump to the map filtered for that terrain:</p>
+                    <div class="sanctuary-preview-grid">
+                        <div class="sanctuary-preview-card" data-filter="mountain">
+                            <div class="spc-icon">🏔️</div>
+                            <h3>Mountain Peaks</h3>
+                            <p>High altitude vantage points that rise above nocturnal mist and boundary atmospheric turbulence.</p>
+                            <span class="spc-link">Filter Peaks &rarr;</span>
+                        </div>
+                        <div class="sanctuary-preview-card" data-filter="sanctuary">
+                            <div class="spc-icon">⛩️</div>
+                            <h3>Shrines & Temples</h3>
+                            <p>Tranquil heritage grounds and elevated monastery terraces preserved from artificial glare.</p>
+                            <span class="spc-link">Filter Sanctuaries &rarr;</span>
+                        </div>
+                        <div class="sanctuary-preview-card" data-filter="park">
+                            <div class="spc-icon">🌲</div>
+                            <h3>Parks & Wilderness</h3>
+                            <p>Nature reserves and secluded lakes offering wide unobstructed horizons under the cosmos.</p>
+                            <span class="spc-link">Filter Wilderness &rarr;</span>
+                        </div>
+                        <div class="sanctuary-preview-card" data-filter="star">
+                            <div class="spc-icon">⭐</div>
+                            <h3>Top Celestial Stars</h3>
+                            <p>Highest-rated bastions boasting Night Honor Scores &gt; 70 for deep astrophotography.</p>
+                            <span class="spc-link">Filter Top Stars &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page Section: Your Night, Measured -->
+                <div class="landing-feature-section">
+                    <h2 class="sub-section-title">Your Night, Measured</h2>
+                    <p class="section-desc">A transparent, explainable 7-factor astronomical suitability index (0 to 100):</p>
+                    <div class="factors-horizontal-wrap">
+                        <div class="factor-pill"><strong>Cloud Cover</strong> (30%)</div>
+                        <div class="factor-pill"><strong>Light Pollution</strong> (25%)</div>
+                        <div class="factor-pill"><strong>Visibility</strong> (15%)</div>
+                        <div class="factor-pill"><strong>Humidity</strong> (10%)</div>
+                        <div class="factor-pill"><strong>Moon Darkness</strong> (10%)</div>
+                        <div class="factor-pill"><strong>Wind Stability</strong> (5%)</div>
+                        <div class="factor-pill"><strong>Location & Elevation</strong> (5%)</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================
+         MAIN DASHBOARD: THE WATCHTOWER
+         =================================================== -->
+    <div id="mainDashboard" class="dashboard-wrap">
+
+        <!-- Floating Moon Badge (Top Right) -->
+        <div class="moon-phase-float" id="moonPhaseFloat" title="Current Lunar Phase">
+            <div class="moon-disc" id="moonDisc"></div>
+            <div class="moon-meta">
+                <div class="moon-name" id="moonName">Waxing Crescent</div>
+                <div class="moon-illum" id="moonIllum">42% Illuminated</div>
+            </div>
+        </div>
+
+        <!-- ===== DASHBOARD HEADER ===== -->
+        <header class="dash-header">
+            <div class="header-inner">
+                <div class="header-seal" id="returnLandingBtn" title="Return to The Samurai's Welcome Gate">
+                    <span class="seal-icon">⛩</span>
+                    <span class="seal-text">月読見張台</span>
+                </div>
+                <div class="header-titles">
+                    <h1 class="site-title">Tsukuyomi Watchtower</h1>
+                    <p class="site-tagline">The Samurai’s Celestial Guide &bull; PECathon 2026</p>
+                </div>
+                <div class="header-actions">
+                    <button id="petalToggleBtn" class="btn-sm-gold" title="Toggle Falling Petals">
+                        🌸 Petals: ON
+                    </button>
+                    <button id="gateReturnBtn" class="btn-sm-gold" title="Return to Landing Page">
+                        <span>⛩</span> Entrance Gate
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-container">
+
+            <!-- ===== 1. LOCATION SELECTOR ===== -->
+            <section class="katana-card" id="sec-location">
+                <div class="card-blade-top" aria-hidden="true"></div>
+                <div class="card-header">
+                    <div class="blade-divider">
+                        <span class="blade-line"></span>
+                        <span class="blade-gem">🏯</span>
+                        <span class="blade-line"></span>
+                    </div>
+                    <h2>Vantage Point Selector</h2>
+                    <p class="card-sub">Select your stargazing post across Japan, India, or worldwide realms</p>
+                </div>
+
+                <div class="loc-controls">
+                    <div class="search-wrap">
+                        <div class="search-row">
+                            <input id="cityInput" type="text" placeholder="Search city, mountain peak, shrine, national park, or coordinates…" autocomplete="off" spellcheck="false">
+                            <button id="searchBtn" class="btn btn-crimson" type="button">
+                                <span>🔍</span> Search Vantage
+                            </button>
+                        </div>
+                        <ul id="suggestions" class="suggestions" aria-label="Location suggestions"></ul>
+                    </div>
+
+                    <div class="or-divider"><span>⚔</span> OR <span>⚔</span></div>
+
+                    <button id="geoBtn" class="btn btn-gold-outline" type="button">
+                        <span>📍</span> Detect Current Position
+                    </button>
+                </div>
+
+                <!-- Active Location Banner -->
+                <div class="loc-badge" id="locBadge">
+                    <div class="loc-badge-symbol">⛩️</div>
+                    <div class="loc-badge-info">
+                        <strong id="badgeName">Mount Fuji (富士山), Japan</strong>
+                        <div class="loc-badge-sub">
+                            <span id="badgeCoords">35.3606°N, 138.7274°E</span>
+                            <span class="badge-separator">&bull;</span>
+                            <span id="badgeElev">3,776 m Elevation</span>
+                            <span class="badge-separator">&bull;</span>
+                            <span id="badgeRegion" class="badge-region-tag">Active Vantage</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 2. UPGRADED NIGHT HONOR SCORE CALCULATOR ===== -->
+            <section class="katana-card" id="sec-score">
+                <div class="card-blade-top" aria-hidden="true"></div>
+                <div class="card-header">
+                    <div class="blade-divider">
+                        <span class="blade-line"></span>
+                        <span class="blade-gem">🌙</span>
+                        <span class="blade-line"></span>
+                    </div>
+                    <h2>Night Honor Score</h2>
+                    <p class="card-sub">7-Factor explainable atmospheric transparency & dark-sky honor (0–100)</p>
+                </div>
+
+                <div class="score-grid-layout">
+
+                    <!-- Circular Samurai Ring Gauge -->
+                    <div class="ring-panel">
+                        <div class="ring-wrap">
+                            <svg class="ring-svg" viewBox="0 0 240 240" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#8B0000"/>
+                                        <stop offset="50%" stop-color="#D4AF37"/>
+                                        <stop offset="100%" stop-color="#ffd700"/>
+                                    </linearGradient>
+                                    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="4" result="blur"/>
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                                    </filter>
+                                </defs>
+                                <circle class="ring-track" cx="120" cy="120" r="100"/>
+                                <circle class="ring-fill" cx="120" cy="120" r="100" id="ringFill"
+                                        stroke-dasharray="628" stroke-dashoffset="628" filter="url(#goldGlow)"/>
+                            </svg>
+                            <div class="ring-inner">
+                                <div class="ring-num" id="ringNum">—</div>
+                                <div class="ring-denom">/ 100</div>
+                                <div class="ring-rank-badge" id="ringRank">Calculating…</div>
+                            </div>
+                        </div>
+                        <div class="ring-rank-desc" id="ringRankDesc">
+                            Consulting cosmic conditions across the heavens…
+                        </div>
+                        <div class="data-completeness-badge" id="dataCompleteness">
+                            Data Completeness: 100% (7/7 Factors Verified)
+                        </div>
+                    </div>
+
+                    <!-- 7-Factor Breakdown Panel with Gold Progress Bars -->
+                    <div class="formula-breakdown-panel">
+                        <div class="formula-header">
+                            <span class="f-title">7-Factor Algorithmic Breakdown</span>
+                            <span class="f-code-tag">Normalized & Explainable</span>
+                        </div>
+
+                        <!-- 7 Factor Component Bars -->
+                        <div class="gauge-breakdown-list">
+
+                            <!-- 1. Cloud Cover (30%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">☁️</span> Cloud Cover Clarity
+                                        <small class="g-raw" id="rawCloud">(0% Cover)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreCloud">0.0 / 30.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barCloud" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 30% &bull; Clearer skies receive higher score</div>
+                            </div>
+
+                            <!-- 2. Light Pollution (25%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">💡</span> Dark Sky Purity (Bortle Scale)
+                                        <small class="g-raw" id="rawBortle">(Class 2)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreBortle">0.0 / 25.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barBortle" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 25% &bull; Darker skies receive higher score</div>
+                            </div>
+
+                            <!-- 3. Visibility (15%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">👁</span> Atmospheric Visibility
+                                        <small class="g-raw" id="rawVis">(24 km)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreVis">0.0 / 15.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barVis" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 15% &bull; Higher horizontal clarity receives higher score</div>
+                            </div>
+
+                            <!-- 4. Humidity (10%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">💧</span> Atmospheric Dryness
+                                        <small class="g-raw" id="rawHumidity">(45% RH)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreHumidity">0.0 / 10.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barHumidity" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 10% &bull; Lower humidity prevents lens dew and aerosol mist</div>
+                            </div>
+
+                            <!-- 5. Moon Darkness (10%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">🌒</span> Lunar Darkness
+                                        <small class="g-raw" id="rawMoon">(42% Illumination)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreMoon">0.0 / 10.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barMoon" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 10% &bull; Less moonlight favors faint deep-sky nebulae observation</div>
+                            </div>
+
+                            <!-- 6. Wind Stability (5%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">💨</span> Wind Stability
+                                        <small class="g-raw" id="rawWind">(5 km/h)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreWind">0.0 / 5.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barWind" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 5% &bull; Calm air prevents telescope tripod vibration</div>
+                            </div>
+
+                            <!-- 7. Terrain & Location Suitability (5%) -->
+                            <div class="gauge-item">
+                                <div class="gauge-meta">
+                                    <span class="gauge-name">
+                                        <span class="g-icon">🏔️</span> Terrain & Altitude Suitability
+                                        <small class="g-raw" id="rawLocation">(3,776 m)</small>
+                                    </span>
+                                    <span class="gauge-score" id="scoreLocation">0.0 / 5.0 pts</span>
+                                </div>
+                                <div class="gauge-bar-track">
+                                    <div class="gauge-bar-fill gold-bar" id="barLocation" style="width: 0%;"></div>
+                                </div>
+                                <div class="gauge-sub">Weight 5% &bull; High altitude rises above inversion smog layers</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Positive & Negative Contributors -->
+                        <div class="insights-container">
+                            <div class="insights-col">
+                                <h4 class="insights-header positive">✦ Favorable Drivers</h4>
+                                <ul id="positiveList" class="insights-list"></ul>
+                            </div>
+                            <div class="insights-col">
+                                <h4 class="insights-header negative">✕ Limiting Factors</h4>
+                                <ul id="negativeList" class="insights-list"></ul>
+                            </div>
+                        </div>
+
+                        <!-- Actionable Observational Recommendations -->
+                        <div class="recommendation-card" id="recommendationBox">
+                            <p>Calculating observational recommendations…</p>
+                        </div>
+
+                        <!-- Forecast Viewing Window Tonight -->
+                        <div class="forecast-window-card">
+                            <span class="fw-icon">⏰</span>
+                            <div class="fw-info">
+                                <strong>Best Viewing Window Tonight (Forecast Projection):</strong>
+                                <span id="forecastWindowText">Loading hourly telemetry…</span>
+                            </div>
+                        </div>
+
+                        <div class="formula-summary" id="formulaSummary">
+                            Calculating real-time astronomical clarity…
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 12 Environmental Telemetry Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="mc-icon">☁️</div>
+                        <div class="mc-label">Cloud Cover</div>
+                        <div class="mc-val" id="mCloud">—</div>
+                        <div class="mc-sub">Open-Meteo Current</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">💧</div>
+                        <div class="mc-label">Humidity</div>
+                        <div class="mc-val" id="mHumid">—</div>
+                        <div class="mc-sub">2m Above Ground</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">👁</div>
+                        <div class="mc-label">Visibility</div>
+                        <div class="mc-val" id="mVis">—</div>
+                        <div class="mc-sub">Atmospheric Range</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">💡</div>
+                        <div class="mc-label">Bortle Scale</div>
+                        <div class="mc-val" id="mLightPoll">—</div>
+                        <div class="mc-sub" id="mBortleTitle">Dark Sky Class</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">🌡</div>
+                        <div class="mc-label">Temperature</div>
+                        <div class="mc-val" id="mTemp">—</div>
+                        <div class="mc-sub">Current Air</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">💨</div>
+                        <div class="mc-label">Wind Velocity</div>
+                        <div class="mc-val" id="mWind">—</div>
+                        <div class="mc-sub">Stability Index</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">🌧</div>
+                        <div class="mc-label">Precipitation</div>
+                        <div class="mc-val" id="mPrecip">—</div>
+                        <div class="mc-sub">Current Rain / Snow</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">🌊</div>
+                        <div class="mc-label">Dew Point</div>
+                        <div class="mc-val" id="mDew">—</div>
+                        <div class="mc-sub">Condensation Risk</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">🏔</div>
+                        <div class="mc-label">Elevation</div>
+                        <div class="mc-val" id="mElev">—</div>
+                        <div class="mc-sub">Sea Level Height</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">🌒</div>
+                        <div class="mc-label">Moon Phase</div>
+                        <div class="mc-val" id="mMoon">—</div>
+                        <div class="mc-sub" id="mMoonDetail">Illumination</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">⏰</div>
+                        <div class="mc-label">Celestial Period</div>
+                        <div class="mc-val" id="mDay">—</div>
+                        <div class="mc-sub">Day / Night Cycle</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="mc-icon">📜</div>
+                        <div class="mc-label">WMO Condition</div>
+                        <div class="mc-val" id="mWmo">—</div>
+                        <div class="mc-sub">Sky State</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 3. THE SCROLL MAP (ANCIENT JAPANESE CELESTIAL NAVIGATION - FIXED 2D VIEW) ===== -->
+            <section class="katana-card map-fixed-card" id="sec-map" data-no-tilt="true">
+                <div class="card-blade-top" aria-hidden="true"></div>
+                <div class="card-header">
+                    <div class="blade-divider">
+                        <span class="blade-line"></span>
+                        <span class="blade-gem">🗺</span>
+                        <span class="blade-line"></span>
+                    </div>
+                    <h2>The Celestial Scroll Map</h2>
+                    <p class="card-sub">Antique Edo-period cartography with real NASA VIIRS & satellite telemetry &bull; Click anywhere on Earth to inspect</p>
+                </div>
+
+                <!-- Category Filters Bar -->
+                <div class="map-filters-bar">
+                    <span class="filter-label">Filter Sanctuaries:</span>
+                    <button class="filter-btn active" data-filter="all">All Bastions</button>
+                    <button class="filter-btn" data-filter="event">☄️ Upcoming Events</button>
+                    <button class="filter-btn" data-filter="mountain">🏔️ Mountain Peaks</button>
+                    <button class="filter-btn" data-filter="sanctuary">⛩️ Shrines & Temples</button>
+                    <button class="filter-btn" data-filter="park">🌲 Parks & Wilderness</button>
+                    <button class="filter-btn" data-filter="star">⭐ Top Celestial Spots</button>
+                </div>
+
+                <!-- Map Frame Container (supports Fullscreen Modal toggle) -->
+                <div class="scroll-map-wrapper" id="scrollMapWrapper">
+
+                    <!-- Edo Ornamental Gold Corner Brackets (Kanagu) -->
+                    <div class="map-corner-bracket corner-tl" aria-hidden="true"></div>
+                    <div class="map-corner-bracket corner-tr" aria-hidden="true"></div>
+                    <div class="map-corner-bracket corner-bl" aria-hidden="true"></div>
+                    <div class="map-corner-bracket corner-br" aria-hidden="true"></div>
+
+                    <!-- Floating Map Action Bar -->
+                    <div class="map-overlay-controls">
+                        <button id="recenterBtn" class="btn-map-ctrl" type="button" title="Recenter Map on Current Position">
+                            <span>📍 Recenter</span>
+                        </button>
+                        <button id="bestSpotBtn" class="btn-map-ctrl" type="button" title="Jump to Highest Rated Stargazing Spot">
+                            <span>⭐ Best Spot</span>
+                        </button>
+                        <button id="expandScrollBtn" class="btn-expand-scroll" type="button" title="Expand Map into Fullscreen Ancient Scroll">
+                            <span class="scroll-btn-icon">📜</span>
+                            <span class="scroll-btn-text">Expand Scroll</span>
+                        </button>
+                    </div>
+
+                    <!-- Modal Close Button (visible only when expanded fullscreen) -->
+                    <button id="closeScrollBtn" class="scroll-modal-close" type="button" aria-label="Close Scroll Fullscreen" hidden>
+                        <span>✕</span>
+                    </button>
+
+                    <!-- Decorative Ancient Compass Rose -->
+                    <div class="ancient-compass-rose" aria-hidden="true" title="Edo Celestial Cardinal Rose">
+                        <div class="compass-inner">
+                            <div class="compass-needle" aria-hidden="true"></div>
+                            <span class="compass-north">北</span>
+                            <span class="compass-east">東</span>
+                            <span class="compass-south">南</span>
+                            <span class="compass-west">西</span>
+                            <div class="compass-center-moon">☾</div>
+                        </div>
+                    </div>
+
+                    <!-- Leaflet Target Element (Ancient Scroll Filter Applied via CSS) -->
+                    <div id="map" class="ancient-scroll-map"></div>
+
+                    <!-- Marker Legend -->
+                    <div class="scroll-map-legend">
+                        <div class="leg-title">Scroll Cartography Legend</div>
+                        <div class="leg-grid">
+                            <div class="leg-item"><span class="leg-icon">⛩️</span> Shrine / Heritage Area</div>
+                            <div class="leg-item"><span class="leg-icon">🏯</span> Temple / Monastery</div>
+                            <div class="leg-item"><span class="leg-icon">🏔️</span> Mountain Peak / Ridge</div>
+                            <div class="leg-item"><span class="leg-icon">🌲</span> Park / Nature Reserve</div>
+                            <div class="leg-item"><span class="leg-icon">⭐</span> Top Candidate Stargazing Spot</div>
+                            <div class="leg-item"><span class="leg-icon">☄️</span> Meteor Shower / Event</div>
+                            <div class="leg-item"><span class="leg-icon">🪐</span> Planetary Alignment</div>
+                            <div class="leg-item"><span class="leg-icon">📍</span> Active Observation Bastion</div>
+                        </div>
+                    </div>
+
+                    <!-- Slide-Out Sanctuary Detail Drawer / Panel -->
+                    <div id="spotDetailPanel" class="spot-detail-panel">
+                        <button id="spotDetailCloseBtn" class="sd-close-btn" aria-label="Close Details">✕</button>
+                        <div class="sd-header">
+                            <div class="sd-tag" id="sdCategory">Mountain Ridge</div>
+                            <h3 id="sdName">Northern Summit Sanctuary</h3>
+                            <p class="sd-distance" id="sdDistance">12.4 km from vantage point</p>
+                        </div>
+                        <div class="sd-score-box">
+                            <span class="sd-score-val" id="sdScore">88 / 100</span>
+                            <span class="sd-score-rank" id="sdRank">Celestial Sanctuary</span>
+                        </div>
+                        <div class="sd-details-list">
+                            <div class="sd-row"><strong>Coordinates:</strong> <span id="sdCoords">—</span></div>
+                            <div class="sd-row"><strong>Elevation:</strong> <span id="sdElev">—</span></div>
+                            <div class="sd-row"><strong>Cloud Cover:</strong> <span id="sdCloud">—</span></div>
+                            <div class="sd-row"><strong>Visibility:</strong> <span id="sdVis">—</span></div>
+                            <div class="sd-row"><strong>Humidity:</strong> <span id="sdHumid">—</span></div>
+                            <div class="sd-row"><strong>Wind Speed:</strong> <span id="sdWind">—</span></div>
+                            <div class="sd-row"><strong>Light Pollution:</strong> <span id="sdBortle">—</span></div>
+                            <div class="sd-row"><strong>Telemetry Time:</strong> <span id="sdTimestamp">—</span></div>
+                        </div>
+                        <div class="sd-reason">
+                            <strong>Astronomical Assessment:</strong>
+                            <p id="sdReason">Optimal atmospheric transparency and dark sky preservation.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ===== 4. UPCOMING CELESTIAL EVENTS & STAR GATHERINGS ===== -->
+            <section class="katana-card" id="sec-events">
+                <div class="card-blade-top" aria-hidden="true"></div>
+                <div class="card-header">
+                    <div class="blade-divider">
+                        <span class="blade-line"></span>
+                        <span class="blade-gem">☄️</span>
+                        <span class="blade-line"></span>
+                    </div>
+                    <h2>Upcoming Celestial Events & Star Gatherings</h2>
+                    <p class="card-sub">Meteor showers, planetary conjunctions, orbital ISS flyovers & public stargazing sessions &bull; Click to inspect & pan map</p>
+                </div>
+
+                <div id="eventsLoader" class="spots-loader">
+                    <div class="katana-spinner"></div>
+                    <p>Consulting planetary orbits, meteor streams, and upcoming astronomical events…</p>
+                </div>
+
+                <div id="eventsGrid" class="events-grid"></div>
+            </section>
+
+            <!-- ===== 5. RECOMMENDED STARGAZING SANCTUARIES ===== -->
+            <section class="katana-card" id="sec-spots">
+                <div class="card-blade-top" aria-hidden="true"></div>
+                <div class="card-header">
+                    <div class="blade-divider">
+                        <span class="blade-line"></span>
+                        <span class="blade-gem">⛩</span>
+                        <span class="blade-line"></span>
+                    </div>
+                    <h2>Sacred Viewing Bastions</h2>
+                    <p class="card-sub">Real geographic locations ranked by the 7-Factor Night Honor Score &bull; Click to inspect & pan map</p>
+                </div>
+
+                <div id="spotsLoader" class="spots-loader">
+                    <div class="katana-spinner"></div>
+                    <p>Consulting astronomical charts and real geographic terrain across the realm…</p>
+                </div>
+
+                <div id="spotsGrid" class="spots-grid"></div>
+            </section>
+
+        </main>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="samurai-footer">
+            <div class="footer-torii-mark">⛩</div>
+            <p class="footer-title">TSUKUYOMI WATCHTOWER &mdash; The Samurai’s Celestial Guide</p>
+            <p class="footer-sub">
+                Telemetry: Open-Meteo High Resolution Weather &bull; Geographic Cartography: OpenStreetMap &bull;
+                Terrain: OpenTopoMap &bull; Satellite: Esri World Imagery &bull; Nighttime Radiance Proxy: NASA EOSDIS GIBS VIIRS
+            </p>
+            <p class="footer-quote">「月読命の御光、刃に宿りて天を照らす」&mdash; May the moonlight dwell upon your blade and light the heavens.</p>
+            <p class="footer-meta">Built for PECathon 2026 &bull; Production Architecture &bull; <a href="tests/scoring.test.html" target="_blank" style="color:#D4AF37;">Run Scoring Unit Tests</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts: Leaflet and Modular Tsukuyomi Engine -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/starfield.js"></script>
+    <script src="js/petals.js"></script>
+    <script src="js/moon.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/scoring.js"></script>
+    <script src="js/lightpollution.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/spots.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

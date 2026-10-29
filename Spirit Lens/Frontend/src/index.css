@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-void: #06080d;
+    --bg-midnight: #0b0f17;
+    --bg-surface: #111723;
+    --bg-surface-elevated: #182030;
+    --border-subtle: rgba(212, 175, 55, 0.15);
+    --border-active: rgba(212, 175, 55, 0.45);
+    --gold-antique: #d4af37;
+    --gold-light: #f3cf65;
+    --gold-dim: #9b8032;
+    --vermilion: #c83e2b;
+    --vermilion-dim: #792518;
+    --text-primary: #f5f6f8;
+    --text-secondary: #9ea8b6;
+    --text-dim: #606877;
+  }
+
+  body {
+    background-color: var(--bg-void);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Atmospheric cosmic background with subtle starlight texture */
+.cosmic-canvas {
+  background-color: #06080d;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(26, 38, 57, 0.4) 0%, transparent 65%),
+    radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 15% 70%, rgba(200, 62, 43, 0.02) 0%, transparent 45%);
+}
+
+/* Glassmorphism astronomical instrument card */
+.instrument-card {
+  background: rgba(13, 17, 26, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.instrument-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.instrument-card-hover:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.08);
+}
+
+/* Antique Gold Pill / Button */
+.btn-gold {
+  background: linear-gradient(135deg, #c5a059 0%, #a88439 100%);
+  color: #07090e;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  border: 1px solid #e5c158;
+}
+
+.btn-gold:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dfb96c 0%, #be9748 100%);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-gold:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* Vermilion Action Button */
+.btn-vermilion {
+  background: linear-gradient(135deg, #c83e2b 0%, #9e2a1b 100%);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid #e0533c;
+  transition: all 0.2s ease;
+}
+
+.btn-vermilion:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dd4b36 0%, #b33221 100%);
+  box-shadow: 0 0 16px rgba(200, 62, 43, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Ghost outline button */
+.btn-outline-gold {
+  background: rgba(17, 23, 35, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #f5f6f8;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-gold:hover:not(:disabled) {
+  border-color: rgba(212, 175, 55, 0.7);
+  background: rgba(212, 175, 55, 0.08);
+  color: #ffffff;
+}
+
+/* Japanese Torii / Celestial Monogram Accents */
+.gold-glow {
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+}
+
+/* Custom slider style */
+input[type="range"] {
+  accent-color: #d4af37;
+}
+
+/* Custom slim scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080b12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #232c3f;
+  border-radius: 3px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #394663;
+}

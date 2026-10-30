@@ -1,0 +1,9 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.9.0
+pillow>=10.4.0
+opencv-python>=4.10.0
+astropy>=6.1.0
+photutils>=2.0.0
+pytest>=8.3.0
+python-multipart>=0.0.12

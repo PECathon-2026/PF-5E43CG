@@ -13,7 +13,7 @@ export const PageShell: React.FC<PageShellProps> = ({ children, health, healthEr
     <div className="min-h-screen flex flex-col cosmic-canvas text-[#f5f6f8] selection:bg-[#d4af37]/30 selection:text-[#f3cf65]">
       <Navbar health={health} healthError={healthError} />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 sm:pb-12">
         {children}
       </main>
 
